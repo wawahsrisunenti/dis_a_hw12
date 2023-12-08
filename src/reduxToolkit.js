@@ -59,5 +59,5 @@ function calculateStatus(squares, winner) {
 }
 
 function calculateNextValue(squares) {
-  return squares.filter(Boolean).length % 2 === 0 ? "X" : "O";
+  return squares.filter(Boolean).length % 2 === 0 ? "Anonymous" : "O";
 }
