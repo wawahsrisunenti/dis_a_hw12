@@ -4,28 +4,28 @@ export const gameSlice = createSlice({
   name: "games",
   initialState: {
     squares: Array(9).fill(null),
-    status: "Next player: Anonymous",
+    status: "Now player: Anonymous",
   },
   reducers: {
     selectSquare: (state, action) => {
       const { squares, status } = state;
       const squareIndex = action.payload;
       if (squares[squareIndex] || calculateWinner(squares)) {
-        return; // Do nothing if the box is filled or the game is already won
+        return; // Jangan lakukan apa-apa jika kotak sudah terisi atau permainan sudah dimenangkan
       }
 
-      squares[squareIndex] = status.includes("X") ? "X" : "O";
+      squares[squareIndex] = status.includes("Anonymous") ? "Anonymous" : "O";
       state.squares = squares;
       state.status = calculateStatus(squares, calculateWinner(squares));
     },
     reset: (state) => {
       state.squares = Array(9).fill(null);
-      state.status = "Next player: Anonymous";
+      state.status = "Now player: Anonymous";
     },
   },
 });
 
-// Utility functions such as calculateWinner, calculateStatus, and calculateNextValue
+// Fungsi utilitas seperti calculateWinner, calculateStatus, dan calculateNowValue
 function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
@@ -52,12 +52,12 @@ function calculateStatus(squares, winner) {
   if (winner) {
     return `Winner: ${winner}`;
   } else if (squares.every(Boolean)) {
-    return "Tickity Tackity Toe";
+    return "Draw!";
   } else {
-    return `Next player: ${calculateNextValue(squares)}`;
+    return `Now player: ${calculateNowValue(squares)}`;
   }
 }
 
-function calculateNextValue(squares) {
+function calculateNowValue(squares) {
   return squares.filter(Boolean).length % 2 === 0 ? "Anonymous" : "O";
 }
